@@ -1,1 +1,38 @@
-echo "hello world"
+pipeline {
+    agent any
+    stages {
+        stage('Create a file') {
+            steps {
+                script {
+                    def fileName = "myfile.txt"
+                    sh "touch ${fileName}"
+                }
+                echo 'File created'
+            }
+        }
+        stage('Edit file') {
+            steps {
+                script {
+                    def fileName = 'example.txt'
+                    def content = 'Hello, Jenkins!'
+                    sh "echo ${content} > ${fileName}"
+                }
+                echo 'Content written'
+            }
+        }
+        stage('Read file') {
+            steps {
+                script {
+                    def fileName = 'example.txt'
+                    def fileContent = sh(script: "cat ${fileName}", returnStdout: true) 
+                    echo "File content: ${fileContent}"
+                }
+            }
+        }
+    }
+    post {
+        always {
+            echo 'Pipeline completed'
+        }
+    }
+}
