@@ -1,0 +1,14 @@
+node {
+    stage('Start') {
+        echo 'starting'
+    }
+stage('Processing') {
+  def items = ['a', 'b', 'c']
+for (def item : items) {
+sh "echo Processing ${item} completed"
+        }
+    }
+stage('ending') {
+echo 'Ending...'
+    }
+}
